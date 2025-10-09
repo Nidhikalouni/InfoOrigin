@@ -2,8 +2,10 @@ import React, { useState, useContext } from 'react'
 import { toast } from "react-toastify";
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const AddDoc = () => {
     const { backendURL } = useContext(AppContext)
+    const navigate = useNavigate();
 
     const [docDetails, setDocDetails] = useState({
         id: "",
@@ -27,16 +29,18 @@ const AddDoc = () => {
         try {
             const { data } = await axios.post(
                 `${backendURL}/api/auth/add-doc`,
-                { title, requirement, intro, useCase, process },
+             { ...docDetails },
                 { withCredentials: true }
             );
 
             if (data.success) {
-                toast.success(data.message);
+                toast.success(data.message||"Document added successfully!");
                 navigate('/document');
+            }else{
+                 toast.error(data.message || "Something went wrong!");
             }
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.response?.data?.message || error.message);
 
         }
 

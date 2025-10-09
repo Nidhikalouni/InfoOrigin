@@ -36,10 +36,11 @@ const Navbar = () => {
         
         <div className="space-x-4">
           <Link to="/" className="hover:text-teal-400">Home</Link>
-          <Link to="/document" className="hover:text-teal-400">Document</Link>
+          {/* <Link to="/document" className="hover:text-teal-400">Document</Link> */}
           
           {isLoggedIn ? (
             <>
+ <Link to="/document" className="hover:underline">Documents</Link>
               
               <button 
                 onClick={handleLogout}
@@ -64,3 +65,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

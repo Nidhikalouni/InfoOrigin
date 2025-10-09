@@ -12,7 +12,7 @@ const Header = () => {
         Document Versioning App - A perfect app for your document verification and review.
         </p>
         <Link 
-          to="/signup" 
+          to="/document" 
           className="bg-teal-400 text-slate-900 font-bold text-lg px-8 py-3 rounded-full hover:bg-teal-300 transition duration-300 transform hover:scale-105 inline-block"
         >
           Get Started Now

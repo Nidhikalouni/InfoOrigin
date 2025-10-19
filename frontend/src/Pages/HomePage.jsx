@@ -1,17 +1,10 @@
 import React from 'react';
 import Header from '../components/Header.jsx';
-
-
 const Home = () => {
   return (
     <div className="min-h-screen">
-      
-      
       <Header /> 
-
-   
-      <main className="container mx-auto py-12 px-6">
-        
+      <main className="container mx-auto py-12 px-6">   
         <section className="text-center mb-12">
           <h2 className="text-3xl font-bold text-slate-800 mb-4">
             Key Features
@@ -31,9 +24,7 @@ const Home = () => {
             </div>
           </div>
         </section>
-
-      </main>
-      
+      </main> 
     </div>
   );
 };

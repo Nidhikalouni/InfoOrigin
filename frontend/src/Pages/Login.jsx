@@ -7,11 +7,8 @@ import { toast } from "react-toastify";
 const Login = () => {
   const {backendURL,setIsLoggedIn} = useContext(AppContext)
   const navigate = useNavigate();
-  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
- 
 
   const handleLogin =  async(e)=>{
     e.preventDefault();
@@ -21,7 +18,6 @@ const Login = () => {
         {email,password},
         {withCredentials:true}
       );
-
       if(data.success){
         toast.success(data.message);
         setIsLoggedIn(true);
@@ -42,12 +38,10 @@ const Login = () => {
           <div className="bg-cyan-600 text-white rounded-md p-4 mb-4 text-center font-semibold">
            LOGIN
           </div>
-
           <form
             onSubmit={handleLogin}
             className="p-6 bg-slate-800 text-white rounded-md space-y-4"
-          >
-            
+          >         
             <input
               type="email"
               placeholder="Email"
@@ -69,13 +63,10 @@ const Login = () => {
               Login
             </button>
           </form>
-          
-
           <div className="text-center mt-4 text-sm text-gray-700">
            Don't have an account?{" "}
             <Link to = '/signup'
-              className="text-teal-400 cursor-pointer underline"
-                    
+              className="text-teal-400 cursor-pointer underline"                 
             >
               SignUp 
             </Link>

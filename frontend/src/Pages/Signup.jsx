@@ -11,8 +11,6 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
- 
-
   const handleSignUp =  async(e)=>{
     e.preventDefault();
     try {
@@ -21,7 +19,6 @@ const SignUp = () => {
         {name,email,password},
         {withCredentials:true}
       );
-
       if(data.success){
         toast.success(data.message);
         navigate('/login');
@@ -78,9 +75,7 @@ const SignUp = () => {
           <div className="text-center mt-4 text-sm text-gray-700">
             Already have an account?{" "}
             <Link to = '/login'
-              className="text-teal-400 cursor-pointer underline"
-            
-              
+              className="text-teal-400 cursor-pointer underline"      
             >
               Login here
             </Link>
@@ -90,5 +85,4 @@ const SignUp = () => {
     </div>
   );
 };
-
 export default SignUp;

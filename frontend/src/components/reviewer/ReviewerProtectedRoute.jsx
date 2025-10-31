@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { AppContext } from '../context/AppContext';
+import { AppContext } from '../../context/AppContext';
 
 const ReviewerProtectedRoute = ({ children }) => {
-  const { isLoggedIn, userRole } = useContext(AppContext);
+  const { isLoggedIn, role } = useContext(AppContext);
 
   if (!isLoggedIn) {
     return <Navigate to="/login" replace />;
   }
 
-  if (userRole !== 'reviewer') {
+  if (role !== 'reviewer') {
     return <Navigate to="/" replace />;
   }
 

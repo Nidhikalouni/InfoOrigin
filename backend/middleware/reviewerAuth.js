@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken'
 export const reviewerAuth = (req, res, next) => {
     const token = req.cookies.token;
     if (!token) return res.json({ success: false, message: 'Not authorized' });

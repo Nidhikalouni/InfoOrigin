@@ -1,5 +1,6 @@
 
 import { Doc } from '../Models/Doc.js'
+import { User } from '../Models/User.js';
 
 export const AddDocument = async (req, res) => {
   try {
@@ -172,5 +173,127 @@ export const reviewDocument = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
+//Reviewer Dashboard 
+// export const reviewerData = async (req, res) => {
+//   try {
+//     const allDocs = await Doc.find();
+
+//     const pending = allDocs.filter(doc => {
+//       const latest = doc.versions[doc.currentVersion - 1];
+//       return latest.status === "pending";
+//     }).length;
+
+//     const approved = allDocs.filter(doc => {
+//       const latest = doc.versions[doc.currentVersion - 1];
+//       return latest.status === "approved";
+//     }).length;
+
+//     const rejected = allDocs.filter(doc => {
+//       const latest = doc.versions[doc.currentVersion - 1];
+//       return latest.status === "rejected";
+//     }).length;
+
+//     res.json({
+//       success: true,
+//       data: {
+//         totalReviewed: approved + rejected,
+//         pending,
+//         approved,
+//         rejected,
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Error fetching reviewer stats:", error);
+//     res.status(500).json({ success: false, message: "Failed to fetch stats" });
+//   }
+// };
+
+
+export const reviewerData = async (req, res) => {
+  try {
+    const allDocs = await Doc.find();
+
+    let pending = 0;
+    let approved = 0;
+    let rejected = 0;
+
+    allDocs.forEach(doc => {
+      const versions = doc.versions;
+      const latest = versions[versions.length - 1];
+      const prev = versions[versions.length - 2]; // previous version if exists
+
+      if (latest.status === "pending") pending++;
+      else if (latest.status === "approved") approved++;
+      else if (latest.status === "rejected") rejected++;
+      else if (latest.status === "draft" && prev?.status === "rejected") rejected++;
+    });
+
+    res.json({
+      success: true,
+      data: {
+        totalReviewed: approved + rejected,
+        pending,
+        approved,
+        rejected,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching reviewer stats:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch stats" });
+  }
+};
+
+
+
+
+// === Reviewed documents list ===
+
+export const getReviewedDocs = async (req, res) => {
+  try {
+    const allDocs = await Doc.find();
+    const reviewedDocs = [];
+
+    allDocs.forEach(doc => {
+      // find the latest reviewed version (approved or rejected)
+      const reviewedVersion = [...doc.versions].reverse().find(v => 
+        v.status === "approved" || v.status === "rejected"
+      );
+      if (reviewedVersion) {
+        reviewedDocs.push({
+          _id: doc._id,
+          title: doc.title,
+          status: reviewedVersion.status,
+          reviewerComments: reviewedVersion.reviewerComments || '',
+          updatedAt: doc.updatedAt
+        });
+      }
+    });
+
+    res.json({ success: true, data: reviewedDocs });
+  } catch (error) {
+    console.error("Error fetching reviewed docs:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch reviewed documents" });
+  }
+};
+
+
+
+
+
+// === Reviewer profile ===
+export const getReviewerProfile = async (req, res) => {
+  try {
+    const reviewer = await User.findById(req.userId).select("name email role");
+    if (!reviewer) return res.status(404).json({ success: false, message: "Reviewer not found" });
+
+    res.json({ success: true, data: reviewer });
+  } catch (error) {
+    console.error("Error fetching reviewer profile:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch reviewer profile" });
+  }
+};
+
 
 

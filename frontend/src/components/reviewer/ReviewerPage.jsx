@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { AppContext } from "../context/AppContext";
+import { AppContext } from "../../context/AppContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -50,9 +50,11 @@ const ReviewerPage = () => {
   };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold text-cyan-700 mb-6">Documents for Review</h1>
+    // <div className="p-6 max-w-5xl mx-auto">
+    //   <h1 className="text-3xl font-bold text-cyan-700 mb-6">Documents for Review</h1>
 
+    <div className="p-4 bg-gray-50 rounded-lg">
+  <h1 className="text-2xl font-bold text-cyan-700 mb-4">Documents for Review</h1>
       {docs.length === 0 ? (
         <p>No documents pending review.</p>
       ) : (

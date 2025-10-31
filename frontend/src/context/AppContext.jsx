@@ -9,7 +9,7 @@ export const AppProvider = (props) => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState(null);
-  const [loading, setLoading] = useState(true); // prevent flicker
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -57,26 +57,3 @@ export const AppProvider = (props) => {
     </AppContext.Provider>
   );
 };
-
-
-
-// import axios  from "axios";
-// import React, { createContext, useState,useEffect } from "react";
-
-// export const AppContext = createContext();
-
-// export const AppProvider = (props)=>{
-   
-//      axios.defaults.withCredentials = true;
-//     const backendURL = import.meta.env.VITE_BACKEND_URL;
-//     const[isLoggedIn,setIsLoggedIn] = useState(false);
-    
-//     const value = {backendURL,isLoggedIn,setIsLoggedIn}
-//     return(
-//         <AppContext.Provider value={value}>
-//             {props.children}
-//         </AppContext.Provider>
-//     )
-// }
-
-

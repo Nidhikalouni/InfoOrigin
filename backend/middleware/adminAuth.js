@@ -1,11 +1,12 @@
+import jwt from 'jsonwebtoken'
 export const adminAuth = (req, res, next) => {
     const token = req.cookies.token;
-      console.log("🔹 Token received in adminAuth:", token)
+    //   console.log("🔹 Token received in adminAuth:", token)
     if (!token) return res.json({ success: false, message: 'Not authorized' });
 
     try {
         const decoded = jwt.verify(token, process.env.SECRET);
-        console.log("✅ Decoded Token:", decoded); 
+        // console.log("✅ Decoded Token:", decoded); 
 
         if (decoded.role !== 'admin') {
             return res.json({ success: false, message: 'Access denied: Admins only' });
